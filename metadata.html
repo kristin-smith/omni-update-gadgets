@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.js"></script>
+</head>
+
+<body>
+  
+<form name="contactInfo"> <!--  action="results.html" passes key:value pairs as URL parameters-->
+    Unit Name: <input type="text" name=unitname /></li>
+    Building name (if applicable):<input type="text" name=building /></li>
+    Street Address: <input type="text" name=address /></li>
+    Phone number: <input type="tel" name=phone /></li>
+    Fax number: <input type="tel" name=faxNumber /></li>
+    Google Map URL: <input type="url" name=map /></li>
+    <input type='button' onclick='passFields()' value='Submit' id="submit"/>
+</form>
+
+<div id="newContactInfo">
+    <p>Copy the code text in the box below. Paste it into the HTML window of your asset content. Preview, Save and Publish as normal.</p>
+<ul style="list-style:none;border:1px solid black;" >&lt;div itemscope itemtype="http://schema.org/Place"&gt;  
+
+<li>&lt;ul&gt; </li>
+    <li id="unitName"></li>
+    <li id="unitBuilding"></li>
+    <li id="unitAddress"></li>
+    <li id="unitPhone"></li>
+    <li id="unitFax"></li>
+    <li id="unitMap"></li>
+<li>&lt;/ul&gt; </li>
+
+<li>&lt;/div&gt;  </li>
+</ul>
+</div>
+
+    <script type="text/javascript"> 
+    function passFields (){
+        if (document.contactInfo.unitname.value!=""){
+            var unitName = document.contactInfo.unitname.value;
+            console.log('set unitName value');}
+        if (document.contactInfo.building.value!=""){
+            var building = document.contactInfo.building.value;
+            console.log('set building value');}
+        if (document.contactInfo.address.value!=""){
+            var address = document.contactInfo.address.value;
+            console.log('set address value');}
+        
+        if (document.contactInfo.phone.value!=""){
+            var phone = document.contactInfo.phone.value;
+            console.log(phone);
+            var cleanPhone = phone.replace(/[\(\)\.\-\ ]/g, ''); 
+            console.log(cleanPhone.length);
+            var clean = parseInt(cleanPhone);
+            if (isNaN(cleanPhone)) {
+               var error= "The phone number contains illegal characters.\n";
+               console.log('phone contains letters, silly');
+            } else if (!(cleanPhone.length == 10)) {
+                var error = "The phone number is the wrong length. Make sure you included an area code.\n";
+                console.log("That phone number doesn't look right. Did you include an area code?");
+            } 
+           // return error;
+            }
+           else{console.log('phone is blank')};
+        
+        
+        if (document.contactInfo.faxNumber.value!=""){
+            var faxNumber = document.contactInfo.faxNumber.value;
+            var clean = faxNumber.replace(/[\(\)\.\-\ ]/g, ''); 
+            var cleanFax = parseInt(clean);
+            console.log(cleanFax);
+            if (isNaN(cleanFax)) {
+              var error="The fax number contains illegal characters.\n";
+                console.log('woops!');
+            } else if (!(clean.length == 10)) {
+                var error = "The fax number is the wrong length. Make sure you included an area code.\n";
+                console.log('wrong number of numbers');
+            } 
+            //return error;
+            //|?|?|?|So when you add this code back in, it holds up the rest of the script, even when a valid phone number is entered. Investigate!!!!!!
+            }
+         else {console.log('fax is blank')};
+
+        
+        if (document.contactInfo.map.value!=""){
+            var map = document.contactInfo.map.value;
+            console.log('set map value');}
+            //else{console.log('map is blank')};
+
+        if (unitName!=undefined){document.getElementById("unitName").innerHTML = '&lt;li itemprop="name"&gt;'+ unitName+ '&lt;/li&gt;';}
+            //else {console.log('error with unitName');}
+        if (building!=undefined){document.getElementById("unitBuilding").innerHTML = '&lt;li itemprop="name"&gt;'+ building+ '&lt;/li&gt;';}
+            //else {console.log('error with unitBuilding');}
+        if (address!=undefined){document.getElementById("unitAddress").innerHTML = '&lt;li itemprop="address"&gt;'+ address + '&lt;/li&gt;';}
+            //else {console.log('error with unitAddress');}
+        if (phone!=undefined){ document.getElementById("unitPhone").innerHTML = '&lt;li itemprop="telephone" &gt;'+'p: &lt;a href="tel:'+cleanPhone+'">'+phone+'&lt;/a&gt;'+'&lt;/li&gt;'; }  
+            else {console.log('error with unitPhone');}
+        if (faxNumber!=undefined){ document.getElementById("unitFax").innerHTML = '&lt;li itemprop="faxNumber" &gt;'+'f:'+ faxNumber+'&lt;/li&gt;'; }  
+            else {console.log('error with unitFax');}
+        if (map!=undefined){document.getElementById("unitMap").innerHTML = '&lt;li itemprop="hasMap"&gt;'+ '&lt;a href="'+map + '" target="_blank">'+'map'+'&lt;/a&gt;'+'&lt;/li&gt;';}
+            //else {console.log('error with unitMap');}
+        };
+    </script>
+   <script>
+        $(document).ready(function (){
+            $('#newContactInfo').hide(0);
+        });
+        $('#submit').click(function (){
+            $('#newContactInfo').show();
+        });
+    </script>
+
+</body>
+</html>
